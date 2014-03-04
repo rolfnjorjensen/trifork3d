@@ -1,18 +1,13 @@
-size = 0.3;
-linear_extrude(height=1) {
-	scale(size) polygon(points=[
-		[29,0],[29,48],[0,48],[0,64],[77,64],[77,48],[48,48],[48,0],
-	], paths=[
-		[0,1,2,3,4,5,6,7]
-	]);
-	
-	translate([90*size, 0]) scale(size) polygon(points=[
-		[0,0], [0,64], [64,64], [80,51], [80,35], [67,24], [67,23], [80,15], [80,0], [61,0], [61,10], [55,17], [19,17], [19,0],
-		[19, 32], [19, 49], [57, 49], [61, 45], [61, 36], [57, 32]
-	
-	], paths=[
-		[0,1,2,3,4,5,6,7, 8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19]
-	]);
-};
+logo_width = dxf_dim(file="Trifork.dxf", name="total_width")+5;
+logo_height = dxf_dim(file="Trifork.dxf", name="total_height")+5;
 
-linear_extrude(height = 1) scale(0.4) import(file = "Trifork.dxf");
+block_thickness = 5;
+
+a = logo_height/2;
+c = logo_height;
+b = sqrt(pow(c,2) - pow(a,2));
+
+rotate([60,0,0]) {
+	rotate([0, 90, 0]) linear_extrude(height=logo_width) polygon([[0,0], [0, c], [b, a]]);
+	linear_extrude(height = 2.5) import(file = "Trifork.dxf");
+};
